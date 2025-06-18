@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"keysym.h": "c",
+		"x.h": "c",
+		"mlx.h": "c"
+	}
+}
