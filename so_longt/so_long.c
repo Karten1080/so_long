@@ -17,6 +17,7 @@ typedef struct s_vars
 	void	*end;
 	void	*feuille;
 	char	*relative_path;
+	int		points_collected;
 	int		x;
 	int		y;
 	int		current_frame;
@@ -28,15 +29,15 @@ typedef struct s_vars
 
 char *map[] = {
     "1111111111111111111111",
-    "10000000000000000000E1",
-    "1000000000000000000001",
-    "1000000000000000000001",
-    "1000000000000000000001",
+    "1C100000000000000001E1",
+    "1010000000000000000001",
+    "1010000000000000000101",
+    "1010000000000000000101",
+	"1011111111111000000111",
+	"1010000000000000000001",
+	"1011111111111111110001",
 	"1000000000000000000001",
-	"1000000000000000000001",
-	"1000000000000000000001",
-	"1000000000000000000001",
-	"1P00000000000000000001",
+	"1P11111111111111100001",
     "1111111111111111111111",
 	NULL
 };
@@ -55,6 +56,24 @@ int	can_move_to(t_vars *vars, int new_x, int new_y, char **map)
 	if (map[map_y][map_x] == 'E')
 		return (2);
 	return (1);
+}
+int	coin(t_vars	*vars,int new_x, int new_y,char **map)
+{
+	int	x;
+	int	y;
+
+	x = new_x / TILE_SIZE;
+	y = new_y / TILE_SIZE;
+	
+
+	if(map[y][x] == 'C')
+	{
+		map[y][x] = '0';
+		vars->points_collected++;
+		printf("gg tas pris une piece pd va ");
+		return 1;
+	}	
+	return (0);
 }
 void	draw_map(t_vars *vars)
 {
@@ -138,6 +157,7 @@ int	key_touch(int keycode, t_vars *vars)
 	{
 		vars->x = new_x;
 		vars->y = new_y;
+		coin(vars, new_x, new_y, vars->map);
 	}
 	else if (move_result == 2)
 	{
@@ -192,6 +212,7 @@ int	main(void)
 	vars.feuille = mlx_xpm_file_to_image(vars.mlx, "koe.xpm", &img_width,
 			&img_height);
 	vars.current_frame = 0;
+	vars.points_collected = 0;
 	vars.x = TILE_SIZE;
 	vars.y = TILE_SIZE;
 	vars.map = map;
