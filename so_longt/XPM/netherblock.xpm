@@ -1,0 +1,40 @@
+/* XPM */
+static char *nether_brick_xpm[] = {
+"30 30 5 1",
+". c #000000",   /* noir pour les joints des briques */
+"r c #330000",   /* rouge très foncé */
+"b c #550000",   /* bordeaux */
+"d c #7A0000",   /* rouge brique */
+"t c #8B1A1A",   /* rouge chaud */
+
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rdddddddddddddddddddddddddddrr",
+"rdddddddddddddddddddddddddddrr",
+"rdddddddddddddddddddddddddddrr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rbbbbbbbbbbbbbbbbbbbbbbbbbbbbr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rdddddddddddddddddddddddddddrr",
+"rdddddddddddddddddddddddddddrr",
+"rdddddddddddddddddddddddddddrr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rttttttttttttttttttttttttttttr",
+"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+".............................."
+};

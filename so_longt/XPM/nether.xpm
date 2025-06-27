@@ -1,0 +1,39 @@
+/* XPM */
+static char *nether_portal_xpm[] = {
+"30 30 4 1",
+". c #000000",   /* noir (structure) */
+"p c #3F00FF",   /* violet foncé (portail) */
+"v c #6A0DAD",   /* violet clair (énergie magique) */
+"w c #8A2BE2",   /* autre violet */
+
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvvvvvvvvvvvvvvvvvvvvvvvvvvvp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
+"pvvvvvvvvvvvvvvvvvvvvvvvvvvvvp",
+"pvwwvvvwwvvvwwvvvwwvvvwwvvvwvp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
+"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp"
+};

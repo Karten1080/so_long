@@ -1,0 +1,40 @@
+/* XPM */
+static char *gold_coin_xpm[] = {
+"30 30 5 1",
+". c #000000",   /* fond / contour */
+"y c #FFD700",   /* or (jaune doré) */
+"Y c #FFC300",   /* doré foncé */
+"w c #FFF8DC",   /* lumière / reflet */
+"o c #8B7500",   /* ombre or sombre */
+
+"..............................",
+"..........oooooooooo..........",
+"........ooYYYYYYYYYYoo........",
+"......ooYYYYyyyyyyYYYYoo......",
+".....oYYYYyyyyyyyyyyYYYYo.....",
+"....oYYYyyyyyyyyyyyyyyYYYo....",
+"...oYYYyyyyyyyyyyyyyyyyYYYo...",
+"..oYYYyyyyyyyyyyyyyyyyyyYYYo..",
+"..oYYyyyyyywwyyyyyywwyyyyYYo..",
+".oYYyyyyywwwwyyyyywwwwyyyYYYo.",
+".oYYyyyyywwwwyyyyywwwwyyyYYYo.",
+".oYYyyyyyywwyyyyyywwyyyyyYYYo.",
+".oYYyyyyyyyyyyyyyyyyyyyyYYYYo.",
+".oYYyyyyyyyyyyyyyyyyyyyyYYYYo.",
+".oYYyyyyyyyyyyyyyyyyyyyyYYYYo.",
+".oYYyyyyyyyyyyyyyyyyyyyyYYYYo.",
+".oYYyyyyyyyyyyyyyyyyyyyyYYYYo.",
+".oYYyyyyyywwyyyyyywwyyyyyYYYo.",
+".oYYyyyyywwwwyyyyywwwwyyyYYYo.",
+".oYYyyyyywwwwyyyyywwwwyyyYYYo.",
+"..oYYyyyyyywwyyyyyywwyyyyYYo..",
+"..oYYYyyyyyyyyyyyyyyyyyyYYYo..",
+"...oYYYyyyyyyyyyyyyyyyyYYYo...",
+"....oYYYyyyyyyyyyyyyyyYYYo....",
+".....oYYYYyyyyyyyyyyYYYYo.....",
+"......ooYYYYyyyyyyYYYYoo......",
+"........ooYYYYYYYYYYoo........",
+"..........oooooooooo..........",
+"..............................",
+".............................."
+};

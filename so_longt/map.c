@@ -1,0 +1,89 @@
+char	**load_map(const char *filename)
+{
+	int		fd;
+	int		i;
+	int		lines;
+	char	**map;
+
+	i = 0;
+	lines = countline(filename);
+	if (lines <= 0)
+		return (0);
+	map = malloc(sizeof(char *) * (lines + 1));
+	if (!map)
+		return (0);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	while (i < lines)
+	{
+		map[i] = get_next_line(fd);
+		/*if(map[i] && map[i][strlen(map[i]) - 1] == '\n')
+			map[i][strlen(map[i]) - 1] = '\0';*/
+		i++;
+	}
+	map[i] = NULL;
+	close(fd);
+	return (map);
+}
+
+void	draw_map(t_vars *vars)
+{
+	int		x;
+	int		y;
+	char	title;
+	int		px;
+	int		py;
+
+	y = 0;
+	while (vars->map[y] != NULL)
+	{
+		x = 0;
+		while (vars->map[y][x] != '\0')
+		{
+			title = vars->map[y][x];
+			px = x * TILE_SIZE;
+			py = y * TILE_SIZE;
+			mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
+			if (title == '1')
+				mlx_put_image_to_window(vars->mlx, vars->win, vars->mur, px,
+					py);
+			if (title == 'E')
+				mlx_put_image_to_window(vars->mlx, vars->win, vars->end, px,
+					py);
+			if (title == '0')
+				mlx_put_image_to_window(vars->mlx, vars->win, vars->feuille, px,
+					py);
+			if (title == 'C')
+				mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px,
+					py);
+			if (title == 'P')
+				mlx_put_image_to_window(vars->mlx, vars->win, vars->spawn, px,
+					py);
+			x++;
+		}
+		y++;
+	}
+}
+
+int	get_map_width(char **map)
+{
+	int	width;
+
+	width = 0;
+	if (!map || !map[0])
+		return (0);
+	return (strlen(map[0])); // pas oublier dutiliser ma libft
+}
+
+int	get_map_height(char **map)
+{
+	int	height;
+
+	height = 0;
+	if (!map)
+		return (0);
+	while (map[height])
+		height++;
+	return (height);
+}

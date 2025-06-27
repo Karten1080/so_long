@@ -1,20 +1,29 @@
+# Nom de l'exécutable
 NAME = so_long
 
-# Chemin vers la MiniLibX Linux
+# Répertoires
 MLX_DIR = ./mlx_linux
+GNL_DIR = ./GNL
+
+# Bibliothèques
 MLX = $(MLX_DIR)/libmlx_Linux.a
 
 # Fichiers sources
-SRC = so_long.c
+SRC = so_long.c \
+      $(GNL_DIR)/get_next_line.c \
+      $(GNL_DIR)/get_next_line_utils.c \
+	  
+
 OBJ = $(SRC:.c=.o)
 
 # Compilation
 CC = gcc
-CFLAGS = -I$(MLX_DIR)
+CFLAGS = -g -I$(MLX_DIR) -I$(GNL_DIR)
 
-# Flags de linkage (ajustés pour Linux)
+# Flags de linkage
 LDFLAGS = -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz
 
+# Règles-Wall -Wextra -Werror 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MLX)
@@ -30,3 +39,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
