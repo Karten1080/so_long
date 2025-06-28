@@ -6,44 +6,12 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
-/*   Updated: 2025/06/26 22:04:17 by asmati           ###   ########.fr       */
+/*   Updated: 2025/06/27 10:14:46 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "GNL/get_next_line.h"
-#include "PRINTF/ft_printf.h"
+
 #include "so_long.h"
-#include <X11/X.h>
-#include <X11/keysym.h>
-#include <fcntl.h>
-#include <mlx.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#define TILE_SIZE 30
-
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-	void	*img;
-	void	*img1;
-	void	*img2;
-	void	*mur;
-	void	*sol;
-	void	*end;
-	void	*spawn;
-	void	*feuille;
-	char	*relative_path;
-	int		points_collected;
-	int		x;
-	int		y;
-	int		current_frame;
-	int		perso_width;
-	int		perso_height;
-	char	**map;
-}			t_vars;
 
 typedef struct s_line
 {
@@ -310,8 +278,6 @@ int	countline(const char *filename)
 	while (i < lines)
 	{
 		map[i] = get_next_line(fd);
-		/*if(map[i] && map[i][strlen(map[i]) - 1] == '\n')
-			map[i][strlen(map[i]) - 1] = '\0';*/
 		i++;
 	}
 	map[i] = NULL;
@@ -333,6 +299,39 @@ void	free_map(char **map)
 	}
 	free(map);
 }
+
+int	close_winds(t_vars *vars)
+{
+	printf("Fonction de fermeture appelée!\n");
+	exit (0);
+	return 0;	
+}
+char	mapmap(t_vars *vars)
+{
+	int		img_width;
+	int		img_height;
+	img_height = get_map_height(vars->map) * TILE_SIZE;
+	img_width = get_map_width(vars->map) * TILE_SIZE; 
+	vars->win = mlx_new_window(vars->mlx, img_width, img_height, "HI");
+	if(img_width == img_height)
+		return(printf("Bro c trop carrer on kiff pas les carrer ici")); // mettre le ft printf 
+	/*vars.img =  mlx_xpm_file_to_image(vars.mlx, "back.xpm", &img_width,
+			&img_height);*/
+	vars->mur = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza.xpm", &img_width,
+			&img_height);
+	vars->sol = mlx_xpm_file_to_image(vars->mlx, "XPM/coin.xpm", &img_width,
+			&img_height);
+	vars->img1 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza.xpm",
+			&vars->perso_height, &vars->perso_width);
+	vars->img2 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza2.xpm",
+			&vars->perso_height, &vars->perso_width);
+	vars->end = mlx_xpm_file_to_image(vars->mlx, "XPM/nether.xpm", &img_width,
+			&img_height);
+	vars->feuille = mlx_xpm_file_to_image(vars->mlx, "XPM/netherblock.xpm",
+			&img_width, &img_height);
+	vars->spawn = mlx_xpm_file_to_image(vars->mlx, "XPM/bed.xpm", &img_width,
+			&img_height);
+}
 int	main(void)
 {
 	t_vars	vars;
@@ -341,53 +340,24 @@ int	main(void)
 
 	vars.map = load_map("MAP/map.ber");
 	printf("Longueur de la première ligne : %lu\n", strlen(vars.map[0]));
-	// printf("%d",coin_counter(&vars));
-	if (!vars.map)
+	if(!vars.map)
 		return (0);
-	img_height = get_map_height(vars.map) * TILE_SIZE;
-	img_width = get_map_width(vars.map) * TILE_SIZE; // 5 lignes
-														// 7 colonnes
-														// printf("%d%d",img_height,img_width);
-	if (img_width == img_height)
-	{
-		printf("Bro c trop carrer on kiff pas les carrer ici");
-		return (0);
-	}
+
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, img_width, img_height, "HI");
-	/*vars.img =  mlx_xpm_file_to_image(vars.mlx, "back.xpm", &img_width,
-			&img_height);*/
-	vars.mur = mlx_xpm_file_to_image(vars.mlx, "XPM/zaza.xpm", &img_width,
-			&img_height);
-	vars.sol = mlx_xpm_file_to_image(vars.mlx, "XPM/coin.xpm", &img_width,
-			&img_height);
-	vars.img1 = mlx_xpm_file_to_image(vars.mlx, "XPM/zaza.xpm",
-			&vars.perso_height, &vars.perso_width);
-	vars.img2 = mlx_xpm_file_to_image(vars.mlx, "XPM/zaza2.xpm",
-			&vars.perso_height, &vars.perso_width);
-	vars.end = mlx_xpm_file_to_image(vars.mlx, "XPM/nether.xpm", &img_width,
-			&img_height);
-	vars.feuille = mlx_xpm_file_to_image(vars.mlx, "XPM/netherblock.xpm",
-			&img_width, &img_height);
-	vars.spawn = mlx_xpm_file_to_image(vars.mlx, "XPM/bed.xpm", &img_width,
-			&img_height);
+	mapmap(&vars);
 	vars.current_frame = 0;
 	vars.points_collected = 0;
 	vars.x = TILE_SIZE;
 	vars.y = TILE_SIZE;
-	// vars.map = map;
 	vars.perso_height = img_height;
 	vars.perso_width = img_width;
 	init_player_position(&vars);
 	draw_map(&vars);
 	coin_counter(&vars);
-	// mlx_key_hook(vars.win,key_touch, &vars);
 	mlx_loop_hook(vars.mlx, render_next_frame, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, key_touch, &vars);
-	mlx_loop(vars.mlx);
-	free_map(vars.map); // PAS OUBLIER DE FREE MAP
-		/////////////////////////////////////////////////////////
-	return (0);
+	mlx_hook(vars.win, 17, 0, close_winds, &vars);
+	return (mlx_loop(vars.mlx),free_map(vars.map),0);
 }
 
 /*int	mouse_move_hook(int keycode, t_vars *vars)

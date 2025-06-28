@@ -10,6 +10,7 @@ MLX = $(MLX_DIR)/libmlx_Linux.a
 
 # Fichiers sources
 SRC = so_long.c \
+		map.c\
       $(GNL_DIR)/get_next_line.c \
       $(GNL_DIR)/get_next_line_utils.c \
 	  

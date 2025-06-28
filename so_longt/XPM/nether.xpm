@@ -1,39 +1,45 @@
 /* XPM */
-static char *nether_portal_xpm[] = {
-"30 30 4 1",
-". c #000000",   /* noir (structure) */
-"p c #3F00FF",   /* violet foncé (portail) */
-"v c #6A0DAD",   /* violet clair (énergie magique) */
-"w c #8A2BE2",   /* autre violet */
-
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvvvvvvvvvvvvvvvvvvvvvvvvvvvp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvwwvvvwwvvvwwvvvwwvvvwwvvvwp",
-"pvvvvvvvvvvvvvvvvvvvvvvvvvvvvp",
-"pvwwvvvwwvvvwwvvvwwvvvwwvvvwvp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp",
-"pvvvwwvvvwwvvvwwvvvwwvvvwwvvvp"
+static char *nether_portal_30x30[] = {
+/* width height ncolors chars_per_pixel */
+"30 30 8 1",
+/* colors */
+"  c #000000",  /* noir (fond) */
+"# c #4a148c",  /* violet foncé */
+"@ c #7b1fa2",  /* violet */
+"$ c #9c27b0",  /* violet clair */
+"% c #ba68c8",  /* violet très clair */
+"& c #e1bee7",  /* violet pastel */
+"* c #8e24aa",  /* violet moyen */
+"+ c #3f006600", /* transparent/obsidienne */
+/* pixels */
+"############@@@@@@@@@@############",
+"##########@@@@@@@@@@@@@@##########",
+"########@@@@@@@@@@@@@@@@@@########",
+"######@@@@@@@@@@@@@@@@@@@@@@######",
+"####@@@@@@$$$$$$$$$$$$@@@@@@@@####",
+"###@@@@@$$$$$$$$$$$$$$$$@@@@@@@###",
+"##@@@@$$$$$$$$$$$$$$$$$$$$@@@@@@##",
+"#@@@@@$$$$$$$$$$$$$$$$$$$$@@@@@@@#",
+"@@@@$$$$$$$$$$$$$$$$$$$$$$$$@@@@@@",
+"@@@$$$$$$$$$$$$$$$$$$$$$$$$$$@@@@@",
+"@@$$$$$$%%%%%%%%%%%%$$$$$$$$@@@@",
+"@$$$$$$%%%%%%%%%%%%%%$$$$$$$@@@@",
+"$$$$$$%%%%%%%%%%%%%%$$$$$$$$@@@@",
+"$$$$$%%%%%%%%%%%%%%$$$$$$$$$@@@@",
+"$$$$%%%%%%%%%%%%%%$$$$$$$$$$@@@@",
+"$$$%%%%%%%%%%%%%%$$$$$$$$$$$@@@@",
+"$$%%%%%%%%%%%%%%$$$$$$$$$$$$@@@@",
+"$%%%%%%%%%%%%%%$$$$$$$$$$$$$@@@@",
+"%%%%%%%%%%%%%%$$$$$$$$$$$$$$@@@@",
+"%%%%%%%%%%%%%%$$$$$$$$$$$$$$@@@@",
+"$%%%%%%%%%%%%%%$$$$$$$$$$$$$@@@@",
+"$$%%%%%%%%%%%%%%$$$$$$$$$$$$@@@@",
+"$$$%%%%%%%%%%%%%%$$$$$$$$$$$@@@@",
+"$$$$%%%%%%%%%%%%%%$$$$$$$$$$@@@@",
+"$$$$$%%%%%%%%%%%%%%$$$$$$$$$@@@@",
+"$$$$$$%%%%%%%%%%%%%%$$$$$$$$@@@@",
+"@$$$$$$%%%%%%%%%%%%%%$$$$$$$@@@@",
+"@@$$$$$$%%%%%%%%%%%%$$$$$$$$@@@@",
+"@@@$$$$$$$$$$$$$$$$$$$$$$$$$$@@@@@",
+"@@@@$$$$$$$$$$$$$$$$$$$$$$$$@@@@@@"
 };

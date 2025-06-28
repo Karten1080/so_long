@@ -1,3 +1,5 @@
+#include "so_long.h"
+
 char	**load_map(const char *filename)
 {
 	int		fd;
@@ -73,7 +75,9 @@ int	get_map_width(char **map)
 	width = 0;
 	if (!map || !map[0])
 		return (0);
-	return (strlen(map[0])); // pas oublier dutiliser ma libft
+	width = strlen(map[0]);
+	width--;
+	return width; // pas oublier dutiliser ma libft
 }
 
 int	get_map_height(char **map)

@@ -3,6 +3,8 @@
 		"keysym.h": "c",
 		"x.h": "c",
 		"mlx.h": "c",
-		"ft_printf.h": "c"
+		"ft_printf.h": "c",
+		"fcntl.h": "c",
+		"so_long.h": "c"
 	}
 }

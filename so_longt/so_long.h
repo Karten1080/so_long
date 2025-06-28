@@ -1,4 +1,4 @@
-/*#ifndef  so_long_h
+#ifndef  so_long_h
 # define so_long_h
 
 #include <X11/X.h>
@@ -11,6 +11,30 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#define TILE_SIZE 30
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	void	*img;
+	void	*img1;
+	void	*img2;
+	void	*mur;
+	void	*sol;
+	void	*end;
+	void	*spawn;
+	void	*feuille;
+	char	*relative_path;
+	int		points_collected;
+	int		x;
+	int		y;
+	int		current_frame;
+	int		perso_width;
+	int		perso_height;
+	char	**map;
+}			t_vars;
 
 int		can_move_to(t_vars *vars, int new_x, int new_y, char **map);
 int		coin(t_vars	*vars,int new_x, int new_y,char **map);
@@ -27,4 +51,4 @@ void	free_map(char **map);
 
 char **load_map(const char *filename);
 
-#endif*/
+#endif
