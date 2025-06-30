@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 22:34:37 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 char	**load_map(const char *filename)
@@ -15,27 +27,42 @@ char	**load_map(const char *filename)
 	if (!map)
 		return (0);
 	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	while (i < lines)
+	if (fd == -1)
 	{
-		map[i] = get_next_line(fd);
-		/*if(map[i] && map[i][strlen(map[i]) - 1] == '\n')
-			map[i][strlen(map[i]) - 1] = '\0';*/
-		i++;
+		free(map);
+		return (0);
 	}
+	while (i < lines)
+		map[i++] = get_next_line(fd);
 	map[i] = NULL;
 	close(fd);
 	return (map);
 }
 
+void	draw_tile(t_vars *vars, char tile, int x, int y)
+{
+	int	px;
+	int	py;
+
+	px = x * TILE_SIZE;
+	py = y * TILE_SIZE;
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
+	if (tile == '1')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->mur, px, py);
+	else if (tile == 'E')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->end, px, py);
+	else if (tile == '0')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->feuille, px, py);
+	else if (tile == 'C')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
+	else if (tile == 'P')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->spawn, px, py);
+}
+
 void	draw_map(t_vars *vars)
 {
-	int		x;
-	int		y;
-	char	title;
-	int		px;
-	int		py;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (vars->map[y] != NULL)
@@ -43,29 +70,12 @@ void	draw_map(t_vars *vars)
 		x = 0;
 		while (vars->map[y][x] != '\0')
 		{
-			title = vars->map[y][x];
-			px = x * TILE_SIZE;
-			py = y * TILE_SIZE;
-			mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
-			if (title == '1')
-				mlx_put_image_to_window(vars->mlx, vars->win, vars->mur, px,
-					py);
-			if (title == 'E')
-				mlx_put_image_to_window(vars->mlx, vars->win, vars->end, px,
-					py);
-			if (title == '0')
-				mlx_put_image_to_window(vars->mlx, vars->win, vars->feuille, px,
-					py);
-			if (title == 'C')
-				mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px,
-					py);
-			if (title == 'P')
-				mlx_put_image_to_window(vars->mlx, vars->win, vars->spawn, px,
-					py);
+			draw_tile(vars, vars->map[y][x], x, y);
 			x++;
 		}
 		y++;
 	}
+	
 }
 
 int	get_map_width(char **map)
@@ -77,9 +87,8 @@ int	get_map_width(char **map)
 		return (0);
 	width = strlen(map[0]);
 	width--;
-	return width; // pas oublier dutiliser ma libft
+	return (width);
 }
-
 int	get_map_height(char **map)
 {
 	int	height;

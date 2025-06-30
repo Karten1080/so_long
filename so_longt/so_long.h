@@ -7,12 +7,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PRINTF/ft_printf.h"
-#include "GNL/get_next_line.h"
+#include "Libft/libft.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+
+
 #define TILE_SIZE 30
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+
+
 
 typedef struct s_vars
 {
@@ -36,19 +44,32 @@ typedef struct s_vars
 	char	**map;
 }			t_vars;
 
+//SO_LONG
 int		can_move_to(t_vars *vars, int new_x, int new_y, char **map);
 int		coin(t_vars	*vars,int new_x, int new_y,char **map);
-int	key_touch(int keycode, t_vars *vars);
-int	render_next_frame(void *param);
-int get_map_width(char **map);
-int get_map_height(char **map);
-int	countline(const char *filename);
-
-
+int		key_touch(int keycode, t_vars *vars);
+int		render_next_frame(void *param);
+int 	get_map_width(char **map);
+int 	get_map_height(char **map);
+int		countline(const char *filename);
 void	draw_map(t_vars *vars);
 void	init_player_position(t_vars *vars);
 void	free_map(char **map);
+char 	**load_map(const char *filename);
+int		close_winds(t_vars *vars);
+char	mapmap(t_vars *vars);
+void	endgame(t_vars *vars);
+void	new_y_x(int x, int y, t_vars *vars);
+int		coin_counter(t_vars *vars);
 
-char **load_map(const char *filename);
+//GNL
+char	*get_next_line(int fd);
+int		strlen_gnl(char *str, char c);
+char	*strjoin_gnl(char *lo, char *bf);
+char	*ft_strchr_gnl(char *s, char c);
+
+
+void	free_all(t_vars *vars);
+
 
 #endif

@@ -1,0 +1,654 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   zzzz                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 19:37:47 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+char	**load_map(const char *filename)
+{
+	int		fd;
+	int		i;
+	int		lines;
+	char	**map;
+
+	i = 0;
+	lines = countline(filename);
+	if (lines <= 0)
+		return (0);
+	map = malloc(sizeof(char *) * (lines + 1));
+	if (!map)
+		return (0);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	while (i < lines)
+	{
+		map[i] = get_next_line(fd);
+		i++;
+	}
+	map[i] = NULL;
+	close(fd);
+	return (map);
+}
+
+void	draw_tile(t_vars *vars, char tile, int x, int y)
+{
+	int	px;
+	int	py;
+
+	px = x * TILE_SIZE;
+	py = y * TILE_SIZE;
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
+	if (tile == '1')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->mur, px, py);
+	else if (tile == 'E')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->end, px, py);
+	else if (tile == '0')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->feuille, px, py);
+	else if (tile == 'C')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
+	else if (tile == 'P')
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->spawn, px, py);
+}
+
+void	draw_map(t_vars *vars)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (vars->map[y] != NULL)
+	{
+		x = 0;
+		while (vars->map[y][x] != '\0')
+		{
+			draw_tile(vars, vars->map[y][x], x, y);
+			x++;
+		}
+		y++;
+	}
+	
+}
+
+int	get_map_width(char **map)
+{
+	int	width;
+
+	width = 0;
+	if (!map || !map[0])
+		return (0);
+	width = strlen(map[0]);
+	width--;
+	return (width);
+}
+int	get_map_height(char **map)
+{
+	int	height;
+
+	height = 0;
+	if (!map)
+		return (0);
+	while (map[height])
+		height++;
+	return (height);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   window.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 11:38:24 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 18:48:06 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+char	mapmap(t_vars *vars)
+{
+	int	img_width;
+	int	img_height;
+
+	img_height = get_map_height(vars->map) * TILE_SIZE;
+	img_width = get_map_width(vars->map) * TILE_SIZE;
+	vars->win = mlx_new_window(vars->mlx, img_width, img_height, "HI");
+	if (img_width == img_height)
+		return (ft_printf("Bro c trop carrer on kiff pas les carrer ici"));
+	vars->mur = mlx_xpm_file_to_image(vars->mlx, "XPM/bedrock.xpm", &img_width,
+			&img_height);
+	vars->sol = mlx_xpm_file_to_image(vars->mlx, "XPM/coin.xpm", &img_width,
+			&img_height);
+	vars->img1 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza.xpm",
+			&img_width,&img_height);
+	vars->img2 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza2.xpm",
+			&img_width, &img_height);
+	vars->end = mlx_xpm_file_to_image(vars->mlx, "XPM/nether.xpm", &img_width,
+			&img_height);
+	vars->feuille = mlx_xpm_file_to_image(vars->mlx, "XPM/netherblock.xpm",
+			&img_width, &img_height);
+	vars->spawn = mlx_xpm_file_to_image(vars->mlx, "XPM/bed.xpm", &img_width,
+			&img_height);
+	return (0);
+}
+
+int	close_winds(t_vars *vars)
+{
+	ft_printf("Fonction de fermeture appelée!\n");
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free_all(vars);
+	return (0);
+}
+
+int	countline(const char *filename)
+{
+	int		fd;
+	int		count;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	count = 0;
+	line = 0;
+	while ((line = get_next_line(fd)))
+	{
+		count++;
+		free(line);
+	}
+	close(fd);
+	return (count);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 11:53:52 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 17:25:04 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+int	can_move_to(t_vars *vars, int new_x, int new_y, char **map)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = new_x / TILE_SIZE;
+	map_y = new_y / TILE_SIZE;
+	if (map[map_y][map_x] == '1')
+		return (0);
+	if (map[map_y][map_x] == 'E')
+		return (2);
+	return (1);
+}
+
+void	init_player_position(t_vars *vars)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (vars->map[y] != NULL)
+	{
+		x = 0;
+		while (vars->map[y][x] != '\0')
+		{
+			if (vars->map[y][x] == 'P')
+			{
+				vars->x = x * TILE_SIZE;
+				vars->y = y * TILE_SIZE;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+int	key_touch(int keycode, t_vars *vars)
+{
+	int	new_x;
+	int	new_y;
+	int	move_result;
+
+	new_x = vars->x;
+	new_y = vars->y;
+	if (keycode == XK_Escape)
+		endgame(vars);
+	else if (keycode == XK_Left)
+		new_x -= TILE_SIZE;
+	else if (keycode == XK_Right)
+		new_x += TILE_SIZE;
+	else if (keycode == XK_Up)
+		new_y -= TILE_SIZE;
+	else if (keycode == XK_Down)
+		new_y += 30;
+	move_result = can_move_to(vars, new_x, new_y, vars->map);
+	if (move_result == 1)
+		new_y_x(new_x, new_y, vars);
+	else if (move_result == 2 && coin_counter(vars) == 0)
+		endgame(vars);
+	return (0);
+}
+
+int	render_next_frame(void *param)
+{
+	t_vars	*vars;
+
+	vars = (t_vars *)param;
+	mlx_clear_window(vars->mlx, vars->win);
+	draw_map(vars);
+	if (vars->current_frame == 0)
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->img1, vars->x,
+			vars->y);
+	else
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->img2, vars->x,
+			vars->y);
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/24 01:37:14 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 18:14:51 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1024
+#endif
+
+static char	*_fill_line_buffer(int fd, char *stash, char *buffer);
+static char	*_set_line(char **line_buffer);
+
+static char	*_set_line(char **line_buffer)
+{
+	size_t	i;
+	char	*tab;
+	char	*rest;
+
+	i = 0;
+	if (!*line_buffer || (*line_buffer)[0] == '\0')
+		return (NULL);
+	while ((*line_buffer)[i] != '\n' && (*line_buffer)[i] != '\0')
+		i++;
+	if ((*line_buffer)[i] == '\n')
+		i++;
+	tab = ft_substr(*line_buffer, 0, i);
+	if (!tab)
+		return (NULL);
+	rest = ft_substr(*line_buffer, i, ft_strlen(*line_buffer) - i);
+	if (!rest)
+	{
+		free(tab);
+		return (NULL);
+	}
+	free(*line_buffer);
+	*line_buffer = rest;
+	return (tab);
+}
+
+static char	*_fill_line_buffer(int fd, char *stash, char *buffer)
+{
+	char	*tmp;
+	ssize_t	bytes_read;
+
+	if (!stash)
+	{
+		stash = ft_strdup_gnl("");
+		if (!stash)
+			return (NULL);
+	}
+	bytes_read = 1;
+	while (!ft_strchr(stash, '\n') && bytes_read > 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(stash);
+			stash = NULL;
+			return (NULL);
+		}
+		buffer[bytes_read] = '\0';
+		tmp = stash;
+		stash = ft_strjoin(stash, buffer);
+		free(tmp);
+	}
+	return (stash);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*buffer;
+	static char	*stash;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	stash = _fill_line_buffer(fd, stash, buffer);
+	free(buffer);
+	if (!stash)
+		return (NULL);
+	line = _set_line(&stash);
+	if (!line || line[0] == '\0')
+	{
+		free(line);
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
+	return (line);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/24 01:41:42 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 18:25:12 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	int				i;
+	unsigned char	ch;
+
+	i = 0;
+	ch = c;
+	if (ch == '\0')
+	{
+		i = ft_strlen(s);
+		return ((char *)s + i++);
+	}
+	while (s[i])
+	{
+		if (s[i] == ch)
+		{
+			return ((char *)s + i);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*ft_strdup_gnl(const char *s1)
+{
+	char	*dest;
+	size_t	i;
+
+	i = 0;
+	dest = (char *)malloc(ft_strlen(s1) + 1);
+	if (!dest)
+	{
+		return (NULL);
+	}
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*substr;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup_gnl(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i])
+	{
+		substr[i] = s[start + i];
+		i++;
+	}
+	substr[i] = '\0';
+	return (substr);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coins.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 09:38:41 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 18:13:20 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+int	coin_counter(t_vars *vars)
+{
+	int		x;
+	int		y;
+	char	title;
+	int		allcoins;
+
+	allcoins = 0;
+	y = 0;
+	while (vars->map[y] != NULL)
+	{
+		x = 0;
+		while (vars->map[y][x] != '\0')
+		{
+			title = vars->map[y][x];
+			if (title == 'C')
+				allcoins++;
+			x++;
+		}
+		y++;
+	}
+	return (allcoins);
+}
+
+int	coin(t_vars *vars, int new_x, int new_y, char **map)
+{
+	int	x;
+	int	y;
+
+	x = new_x / TILE_SIZE;
+	y = new_y / TILE_SIZE;
+	if (map[y][x] == 'C')
+	{
+		map[y][x] = '0';
+		vars->points_collected++;
+		ft_printf("gg tas pris une piece pd va %d", vars->points_collected);
+		return (1);
+	}
+	return (0);
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
+/*   Updated: 2025/06/29 19:27:21 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+void	endgame(t_vars *vars)
+{
+	ft_printf("Fin du jeu");
+	free_all(vars);
+	exit (0);
+}
+
+void	new_y_x(int x, int y, t_vars *vars)
+{
+	vars->x = x;
+	vars->y = y;
+	coin(vars, x, y, vars->map);
+}
+
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	if (!map)
+		return ;
+	while (map[i] != NULL)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+void	free_all(t_vars *vars)
+{
+	if (vars->mur)
+		mlx_destroy_image(vars->mlx, vars->mur);
+	if (vars->sol)
+		mlx_destroy_image(vars->mlx, vars->sol);
+	if (vars->end)
+		mlx_destroy_image(vars->mlx, vars->end);
+	if (vars->feuille)
+		mlx_destroy_image(vars->mlx, vars->feuille);
+	if (vars->img1)
+		mlx_destroy_image(vars->mlx, vars->img1);
+	if (vars->img2)
+		mlx_destroy_image(vars->mlx, vars->img2);
+	if (vars->spawn)
+		mlx_destroy_image(vars->mlx, vars->spawn);
+
+	if (vars->win)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		vars->win = NULL;
+	}
+	if (vars->map)
+		free_map(vars->map);
+	if (vars->mlx)
+	{
+		mlx_destroy_display(vars->mlx);
+		free(vars->mlx);
+		vars->mlx = NULL;
+	}
+}
+
+int	main(void)
+{
+	t_vars	vars;
+
+	vars.mur = NULL;
+	vars.sol = NULL;
+	vars.end = NULL;
+	vars.feuille = NULL;
+	vars.img1 = NULL;
+	vars.img2 = NULL;
+	vars.spawn = NULL;
+	vars.win = NULL;
+	vars.mlx = NULL;
+	vars.map = NULL;
+
+
+	vars.map = load_map("MAP/map.ber");
+	if (!vars.map)
+		return (ft_printf("Erreur : chargement de la map échoué.\n"), 1);
+	
+	printf("Longueur de la première ligne : %lu\n", ft_strlen(vars.map[0]));
+
+	vars.mlx = mlx_init();
+	if (!vars.mlx)
+		return (ft_printf("Erreur : échec de mlx_init.\n"), 1);
+
+	if (mapmap(&vars) != 0)
+	{
+		ft_printf("Erreur lors du chargement des images ou création fenêtre.\n");
+		free_all(&vars);
+		return (1);
+	}
+
+	vars.current_frame = 0;
+	vars.points_collected = 0;
+	vars.x = TILE_SIZE;
+	vars.y = TILE_SIZE;
+
+	init_player_position(&vars);
+	draw_map(&vars);
+	coin_counter(&vars);
+
+	mlx_loop_hook(vars.mlx, render_next_frame, &vars);
+	mlx_hook(vars.win, 2, 1L << 0, key_touch, &vars);
+	mlx_hook(vars.win, 17, 0, close_winds, &vars);
+	mlx_loop(vars.mlx);
+	return (0);
+}
+
