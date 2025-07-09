@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 09:38:41 by asmati            #+#    #+#             */
-/*   Updated: 2025/06/29 18:13:20 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/02 03:32:38 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	coin(t_vars *vars, int new_x, int new_y, char **map)
 	{
 		map[y][x] = '0';
 		vars->points_collected++;
-		ft_printf("gg tas pris une piece pd va %d", vars->points_collected);
+		ft_printf("Bien jouer une piece a ete recolter%d", vars->points_collected);
 		return (1);
 	}
 	return (0);

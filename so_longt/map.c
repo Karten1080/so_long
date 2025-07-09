@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
-/*   Updated: 2025/06/29 22:34:37 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/02 03:46:44 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	get_map_width(char **map)
 	width--;
 	return (width);
 }
+
 int	get_map_height(char **map)
 {
 	int	height;

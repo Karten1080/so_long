@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:38:24 by asmati            #+#    #+#             */
-/*   Updated: 2025/06/29 23:46:32 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/09 02:35:47 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,21 @@ char	mapmap(t_vars *vars)
 	int	img_width;
 	int	img_height;
 
+	img_width = 0;
+	img_height = 0;
+
 	img_height = get_map_height(vars->map) * TILE_SIZE;
 	img_width = get_map_width(vars->map) * TILE_SIZE;
 	vars->win = mlx_new_window(vars->mlx, img_width, img_height, "HI");
 	if (img_width == img_height)
 		return (ft_printf("Bro c trop carrer on kiff pas les carrer ici"));
-	vars->mur = mlx_xpm_file_to_image(vars->mlx, "XPM/bedrock.xpm", &img_width,
-			&img_height);
-	vars->sol = mlx_xpm_file_to_image(vars->mlx, "XPM/coin.xpm", &img_width,
-			&img_height);
-	vars->img1 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza.xpm",
-			&img_width,&img_height);
-	vars->img2 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza2.xpm",
-			&img_width, &img_height);
-	vars->end = mlx_xpm_file_to_image(vars->mlx, "XPM/nether.xpm", &img_width,
-			&img_height);
-	vars->feuille = mlx_xpm_file_to_image(vars->mlx, "XPM/netherblock.xpm",
-			&img_width, &img_height);
-	vars->spawn = mlx_xpm_file_to_image(vars->mlx, "XPM/bed.xpm", &img_width,
-			&img_height);
+	vars->mur = mlx_xpm_file_to_image(vars->mlx, "XPM/bedrock.xpm", &img_width, &img_height);
+	vars->sol = mlx_xpm_file_to_image(vars->mlx, "XPM/coin.xpm", &img_width, &img_height);
+	vars->img1 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza.xpm", &img_width,&img_height);
+	vars->img2 = mlx_xpm_file_to_image(vars->mlx, "XPM/zaza2.xpm", &img_width, &img_height);
+	vars->end = mlx_xpm_file_to_image(vars->mlx, "XPM/nether.xpm", &img_width, &img_height);
+	vars->feuille = mlx_xpm_file_to_image(vars->mlx, "XPM/netherblock.xpm", &img_width, &img_height);
+	vars->spawn = mlx_xpm_file_to_image(vars->mlx, "XPM/bed.xpm", &img_width, &img_height);
 	return (0);
 }
 

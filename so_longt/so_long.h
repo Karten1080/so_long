@@ -3,7 +3,7 @@
 
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include <mlx.h>
+#include "minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "PRINTF/ft_printf.h"
@@ -12,15 +12,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
-
 #define TILE_SIZE 30
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
-
-
-
 
 typedef struct s_vars
 {
@@ -63,10 +58,12 @@ void	new_y_x(int x, int y, t_vars *vars);
 int		coin_counter(t_vars *vars);
 
 //GNL
+char *ft_strchr(const char *s, int c);
+char	*ft_strdup_gnl(const char *s1);
+size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*get_next_line(int fd);
-int		strlen_gnl(char *str, char c);
-char	*strjoin_gnl(char *lo, char *bf);
-char	*ft_strchr_gnl(char *s, char c);
 
 
 void	free_all(t_vars *vars);

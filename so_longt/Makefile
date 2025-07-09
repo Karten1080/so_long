@@ -1,57 +1,71 @@
-NAME = so_longg
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adel <adel@student.42.fr>                   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/02                                #+#    #+#              #
+#    Updated: 2025/07/02                                ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Nom du programme
+NAME        = so_long
+
+# Compilateur et flags
+CC          = cc
+CFLAGS      = 
 
 # Répertoires
-MLX_DIR = ./mlx_linux
-PRINTF_DIR = ./PRINTF
-LIBFT = ./Libft
+MLX_DIR     = ./minilibx-linux
+PRINTF_DIR  = ./PRINTF
+LIBFT_DIR   = ./Libft
 
 # Bibliothèques
-MLX = $(MLX_DIR)/libmlx_Linux.a
-PRINTF_LIB = $(PRINTF_DIR)/libftprintf.a
-LIBFT_LIB = $(Libft)/libft.a
+MLX_LIB     = $(MLX_DIR)/libmlx_Linux.a
+PRINTF_LIB  = $(PRINTF_DIR)/libftprintf.a
+LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
-# Fichiers sources
-SRC = so_long.c \
-      map.c \
-      get_next_line.c \
-      get_next_line_utils.c\
-	  coins.c\
-	  player.c\
-	  window.c\
+# Fichiers source et objets
+SRCS        = so_long.c map.c player.c coins.c window.c get_next_line.c get_next_line_utils.c
+OBJS        = $(SRCS:.c=.o)
 
-# Objets
-OBJ = $(SRC:.c=.o)
+# Flags spécifiques pour linker la MLX
+LDFLAGS     = -L$(MLX_DIR) -lmlx_Linux -L$(PRINTF_DIR) -lftprintf -L$(LIBFT_DIR) -lft \
+			  -lXext -lX11 -lm -lz
 
-# Compilation
-CC = gcc
-CFLAGS = -g -I$(MLX_DIR) -I$(PRINTF_DIR)
-
-# Flags de linkage
-LDFLAGS = -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz
-
-# Règle principale
+# Règle par défaut
 all: $(NAME)
 
-$(NAME): $(OBJ) $(MLX) $(PRINTF_LIB)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PRINTF_LIB) $(LDFLAGS)
+# Compilation du binaire
+$(NAME): $(OBJS) $(MLX_LIB) $(PRINTF_LIB) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
-# Build des bibliothèques
-$(MLX):
+# Compilation des librairies
+$(MLX_LIB):
 	$(MAKE) -C $(MLX_DIR)
 
 $(PRINTF_LIB):
 	$(MAKE) -C $(PRINTF_DIR)
-	
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_LIB)
 
-# Nettoyage
+$(LIBFT_LIB):
+	$(MAKE) -C $(LIBFT_DIR)
+
+# Nettoyage des objets
 clean:
-	rm -f $(OBJ)
+	$(RM) $(OBJS)
+	$(MAKE) -C $(MLX_DIR) clean
+	$(MAKE) -C $(PRINTF_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
 
+# Nettoyage complet
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
+	$(MAKE) -C $(PRINTF_DIR) fclean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
+# Rebuild complet
 re: fclean all
 
 .PHONY: all clean fclean re
