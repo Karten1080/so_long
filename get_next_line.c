@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 01:37:14 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/10 15:49:04 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/10 17:42:44 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*_fill_line_buffer(int fd, char *stash, char *buffer)
 
 	if (!stash)
 	{
-		stash = ft_strdup("");
+		stash = ft_strdup_gnl("");
 		if (!stash)
 			return (NULL);
 	}

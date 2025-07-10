@@ -40,7 +40,7 @@ typedef struct s_vars
 }			t_vars;
 
 //SO_LONG
-int		can_move_to(int new_x, int new_y, char **map);
+int		can_move_to(t_vars *vars, int new_x, int new_y, char **map);
 int		coin(t_vars	*vars,int new_x, int new_y,char **map);
 int		key_touch(int keycode, t_vars *vars);
 int		render_next_frame(void *param);

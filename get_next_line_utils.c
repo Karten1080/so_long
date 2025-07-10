@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 01:41:42 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/10 15:56:54 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/10 17:42:31 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
-		return (ft_strdup(""));
+		return (ft_strdup_gnl(""));
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);
 	substr = (char *)malloc(sizeof(char) * (len + 1));
@@ -96,9 +96,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 
 	if (!s1)
-		return (ft_strdup(s2));
+		return (ft_strdup_gnl(s2));
 	if (!s2)
-		return (ft_strdup(s1));
+		return (ft_strdup_gnl(s1));
 	i = 0;
 	j = 0;
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));

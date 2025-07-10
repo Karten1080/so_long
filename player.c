@@ -6,13 +6,13 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:53:52 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/10 17:36:25 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/10 18:09:30 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	can_move_to(int new_x, int new_y, char **map)
+int	can_move_to(t_vars *vars, int new_x, int new_y, char **map)
 {
 	int	map_x;
 	int	map_y;
@@ -67,7 +67,7 @@ int	key_touch(int keycode, t_vars *vars)
 		new_y -= TILE_SIZE;
 	else if (keycode == XK_Down)
 		new_y += TILE_SIZE;
-	move_result = can_move_to(new_x, new_y, vars->map);
+	move_result = can_move_to(vars, new_x, new_y, vars->map);
 	if (move_result == 1)
 		new_y_x(new_x, new_y, vars);
 	else if (move_result == 2 && coin_counter(vars) == 0)
@@ -80,7 +80,6 @@ int	render_next_frame(void *param)
 	t_vars	*vars;
 
 	vars = (t_vars *)param;
-	mlx_clear_window(vars->mlx, vars->win);
 	draw_map(vars);
 	if (vars->current_frame == 0)
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->img1, vars->x,

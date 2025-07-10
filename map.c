@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/02 03:46:44 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/10 18:23:39 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	draw_tile(t_vars *vars, char tile, int x, int y)
 
 	px = x * TILE_SIZE;
 	py = y * TILE_SIZE;
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->sol, px, py);
 	if (tile == '1')
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->mur, px, py);
 	else if (tile == 'E')

@@ -6,7 +6,7 @@
 #    By: adel <adel@student.42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02                                #+#    #+#              #
-#    Updated: 2025/07/10                                ###   ########.fr        #
+#    Updated: 2025/07/02                                ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,14 @@ NAME        = so_long
 
 # Compilateur et flags
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -I$(MLX_DIR) -I$(PRINTF_DIR) -I$(LIBFT_DIR)
+CFLAGS      = 
 
 # Répertoires
 MLX_DIR     = ./minilibx-linux
 PRINTF_DIR  = ./PRINTF
 LIBFT_DIR   = ./Libft
 
-# Bibliothèques statiques
+# Bibliothèques
 MLX_LIB     = $(MLX_DIR)/libmlx_Linux.a
 PRINTF_LIB  = $(PRINTF_DIR)/libftprintf.a
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
@@ -31,16 +31,16 @@ LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 SRCS        = so_long.c map.c player.c coins.c window.c get_next_line.c get_next_line_utils.c
 OBJS        = $(SRCS:.c=.o)
 
-# Flags spécifiques pour le linkage
-LDFLAGS     = $(MLX_LIB) $(PRINTF_LIB) $(LIBFT_LIB) \
-              -lXext -lX11 -lm -lz
+# Flags spécifiques pour linker la MLX
+LDFLAGS     = -L$(MLX_DIR) -lmlx_Linux -L$(PRINTF_DIR) -lftprintf -L$(LIBFT_DIR) -lft \
+			  -lXext -lX11 -lm -lz
 
 # Règle par défaut
 all: $(NAME)
 
 # Compilation du binaire
 $(NAME): $(OBJS) $(MLX_LIB) $(PRINTF_LIB) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 # Compilation des librairies
 $(MLX_LIB):
