@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/10 18:23:39 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 00:19:59 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,49 @@ char	**load_map(const char *filename)
 	map[i] = NULL;
 	close(fd);
 	return (map);
+}
+int check_multiple_exites(char **map){
+
+	int	i;
+	int	j;
+	int	exit_count;
+	
+	exit_count = 0;
+	i = 0;
+	while(map[i]){
+		j = 0;
+		while(map[i][j])
+		{
+			if(map[i][j] == 'E' || map[i][j] == 'P')
+				exit_count++;
+			j++;
+		}
+		i++;
+	}
+	if (exit_count > 2)
+		return (1);
+	return (0);
+}
+
+int	 check_rectangle(char **map)
+{
+	int i;
+	size_t len;
+	
+	if (!map || !map[0])
+		return (1);
+	len = strlen(map[0]);
+	i = 1;
+	while(map[i])
+	{
+		if(ft_strlen(map[i]) != len)
+		{
+			ft_printf("Erreur : la map n'est pas rectangulaire.\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 void	draw_tile(t_vars *vars, char tile, int x, int y)

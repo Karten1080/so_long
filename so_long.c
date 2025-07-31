@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/02 03:45:53 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 00:32:45 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,19 @@ void	free_map(char **map)
 	map = NULL;
 }
 
+// Dans un header genre so_long.h ou utils.h :
+#define SAFE_DESTROY(img) if (img) { mlx_destroy_image(vars->mlx, img); img = NULL; }
+#define SAFE_FREE(ptr)    if (ptr) { free(ptr); ptr = NULL; }
+
 void	free_all(t_vars *vars)
 {
-	if (vars->mur)
-		mlx_destroy_image(vars->mlx, vars->mur);
-	if (vars->sol)
-		mlx_destroy_image(vars->mlx, vars->sol);
-	if (vars->end)
-		mlx_destroy_image(vars->mlx, vars->end);
-	if (vars->feuille)
-		mlx_destroy_image(vars->mlx, vars->feuille);
-	if (vars->img1)
-		mlx_destroy_image(vars->mlx, vars->img1);
-	if (vars->img2)
-		mlx_destroy_image(vars->mlx, vars->img2);
-	if (vars->spawn)
-		mlx_destroy_image(vars->mlx, vars->spawn);
+	SAFE_DESTROY(vars->mur);
+	SAFE_DESTROY(vars->sol);
+	SAFE_DESTROY(vars->end);
+	SAFE_DESTROY(vars->feuille);
+	SAFE_DESTROY(vars->img1);
+	SAFE_DESTROY(vars->img2);
+	SAFE_DESTROY(vars->spawn);
 
 	if (vars->win)
 	{
@@ -69,12 +66,11 @@ void	free_all(t_vars *vars)
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);
-		free(vars->mlx);
-		vars->mlx = NULL;
+		SAFE_FREE(vars->mlx);
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars	vars;
 
@@ -89,9 +85,13 @@ int	main(void)
 	vars.mlx = NULL;
 	vars.map = NULL;
 
-	vars.map = load_map("MAP/map.ber");
+	vars.map = load_map(argv[1]);
 	if (!vars.map)
 		return (ft_printf("Erreur : chargement de la map échoué.\n"), 1);
+	if(check_multiple_exites(vars.map) == 1)
+		return (free_map(vars.map),ft_printf("Erreur : plusieurs sorties détectées.\n"),0);
+	if(check_rectangle(vars.map) == 1) 
+		return (free_map(vars.map),0);
 	//printf("Longueur de la première ligne : %lu\n", strlen(vars.map[0])); //mettre le ft strlen
 	vars.mlx = mlx_init();
 	if (!vars.mlx)

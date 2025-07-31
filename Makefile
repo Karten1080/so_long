@@ -28,7 +28,14 @@ PRINTF_LIB  = $(PRINTF_DIR)/libftprintf.a
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
 # Fichiers source et objets
-SRCS        = so_long.c map.c player.c coins.c window.c get_next_line.c get_next_line_utils.c
+SRCS        = so_long.c\
+			 map.c \
+			 player.c \
+			 coins.c \
+			 window.c \
+			 get_next_line.c \
+			 get_next_line_utils.c \
+
 OBJS        = $(SRCS:.c=.o)
 
 # Flags spécifiques pour linker la MLX

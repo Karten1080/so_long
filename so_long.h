@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 00:31:18 by asmati            #+#    #+#             */
+/*   Updated: 2025/07/31 00:31:19 by asmati           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef  so_long_h
 # define so_long_h
 
@@ -16,6 +28,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+#define SAFE_DESTROY(img) if (img) { mlx_destroy_image(vars->mlx, img); img = NULL; }
 
 typedef struct s_vars
 {
@@ -56,7 +69,7 @@ char	mapmap(t_vars *vars);
 void	endgame(t_vars *vars);
 void	new_y_x(int x, int y, t_vars *vars);
 int		coin_counter(t_vars *vars);
-
+int check_multiple_exites(char **map);
 //GNL
 char *ft_strchr(const char *s, int c);
 char	*ft_strdup_gnl(const char *s1);
@@ -67,6 +80,7 @@ char	*get_next_line(int fd);
 
 
 void	free_all(t_vars *vars);
+int	 check_rectangle(char **map);
 
 
 #endif
