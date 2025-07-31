@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:53:52 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/30 23:37:52 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 05:03:03 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int	key_touch(int keycode, t_vars *vars)
 		new_y += TILE_SIZE;
 	move_result = can_move_to(vars, new_x, new_y, vars->map);
 	if (move_result == 1)
+	{
 		new_y_x(new_x, new_y, vars);
+		printf("Player moved to (%d, %d)\n", new_x, new_y);
+	}
 	else if (move_result == 2 && coin_counter(vars) == 0)
 		endgame(vars);
 	return (0);

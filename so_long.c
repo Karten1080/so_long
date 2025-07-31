@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 00:32:45 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 05:03:16 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ void	free_map(char **map)
 	map = NULL;
 }
 
-// Dans un header genre so_long.h ou utils.h :
-#define SAFE_DESTROY(img) if (img) { mlx_destroy_image(vars->mlx, img); img = NULL; }
-#define SAFE_FREE(ptr)    if (ptr) { free(ptr); ptr = NULL; }
 
 void	free_all(t_vars *vars)
 {
@@ -72,6 +69,7 @@ void	free_all(t_vars *vars)
 
 int	main(int argc, char **argv)
 {
+	int count;
 	t_vars	vars;
 
 	vars.mur = NULL;
@@ -87,10 +85,12 @@ int	main(int argc, char **argv)
 
 	vars.map = load_map(argv[1]);
 	if (!vars.map)
-		return (ft_printf("Erreur : chargement de la map échoué.\n"), 1);
+		return (ft_printf("Error: failed to load map.\n"), 1);
 	if(check_multiple_exites(vars.map) == 1)
-		return (free_map(vars.map),ft_printf("Erreur : plusieurs sorties détectées.\n"),0);
+		return (free_map(vars.map),ft_printf("Error: multiple exits detected.\n"),0);
 	if(check_rectangle(vars.map) == 1) 
+		return (free_map(vars.map),0);
+	if(check_map_validity(vars.map) == 1)
 		return (free_map(vars.map),0);
 	//printf("Longueur de la première ligne : %lu\n", strlen(vars.map[0])); //mettre le ft strlen
 	vars.mlx = mlx_init();
@@ -110,7 +110,6 @@ int	main(int argc, char **argv)
 	init_player_position(&vars);
 	draw_map(&vars);
 	coin_counter(&vars);
-
 	mlx_loop_hook(vars.mlx, render_next_frame, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, key_touch, &vars);
 	mlx_hook(vars.win, 17, 0, close_winds, &vars);

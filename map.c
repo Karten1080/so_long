@@ -6,11 +6,54 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 00:19:59 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 05:22:36 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+// char	**load_map(const char *filename)
+// {
+// 	int		fd;
+// 	int		i;
+// 	int		lines;
+// 	char	**map;
+// 	char	*line;
+
+// 	lines = countline(filename);
+// 	if (lines <= 0)
+// 		return (NULL);
+// 	map = malloc(sizeof(char *) * (lines + 1));
+// 	if (!map)
+// 		return (NULL);
+// 	fd = open(filename, O_RDONLY);
+// 	if (fd == -1)
+// 	{
+// 		free(map);
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	while (i < lines)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (!line)
+// 			break;
+// 		map[i] = ft_strtrim(line, "\n");
+// 		free(line);
+// 		if (!map[i])
+// 		{
+// 			// Libère en cas d'échec
+// 			while (--i >= 0)
+// 				free(map[i]);
+// 			free(map);
+// 			close(fd);
+// 			return (NULL);
+// 		}
+// 		i++;
+// 	}
+// 	map[i] = NULL;
+// 	close(fd);
+// 	return (map);
+// }
 
 char	**load_map(const char *filename)
 {
@@ -61,6 +104,33 @@ int check_multiple_exites(char **map){
 	return (0);
 }
 
+int check_map_validity(char **map)
+{
+	int i;
+	int j;
+	int exit_count;
+
+	i = 0 ;
+	exit_count = 0;
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(map[i][j] != 'E' && map[i][j] != 'P' && map[i][j] != '1'  \
+				&& map[i][j] != '0' && map[i][j] != 'C' && map[i][j] != '\n')
+				exit_count++;
+			j++;
+		}
+		i++;
+	}
+	if(exit_count > 0)
+	{
+		ft_printf("Erreur : la map contient des caractères invalides.\n");
+		return (1);
+	}
+	return (0);
+}
 int	 check_rectangle(char **map)
 {
 	int i;
@@ -117,7 +187,6 @@ void	draw_map(t_vars *vars)
 		}
 		y++;
 	}
-	
 }
 
 int	get_map_width(char **map)
