@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:31:18 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 04:13:58 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:32:21 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 # endif
 #define SAFE_DESTROY(img) if (img) { mlx_destroy_image(vars->mlx, img); img = NULL; }
 #define SAFE_FREE(ptr)    if (ptr) { free(ptr); ptr = NULL; }
+
+typedef struct s_point {
+	int x;
+	int y;
+}	t_point;
 
 typedef struct s_vars
 {

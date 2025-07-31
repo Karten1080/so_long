@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:52:58 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 05:22:36 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 23:02:44 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,53 @@ int check_multiple_exites(char **map){
 		return (1);
 	return (0);
 }
+#include <stdio.h>
+
+t_point	get_player_position(char **map)
+{
+	t_point	pos;
+	int		i = 0, j;
+
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'P')
+			{
+				pos.x = j;
+				pos.y = i;
+				return (pos);
+			}
+			j++;
+		}
+		i++;
+	}
+	pos.x = -1;
+	pos.y = -1;
+	return (pos);
+}
+
+// Vérifie si le joueur est bloqué à sa position
+int	is_player_blocked(char **map)
+{
+	t_point	p = get_player_position(map);
+
+	if (p.x == -1 || p.y == -1)
+		return (1); // Joueur introuvable = erreur = bloqué
+
+	// Directions valides = pas un mur ('1') ou autre obstacle
+	if (map[p.y - 1][p.x] != '1') return (0); // Haut
+	if (map[p.y + 1][p.x] != '1') return (0); // Bas
+	if (map[p.y][p.x - 1] != '1') return (0); // Gauche
+	if (map[p.y][p.x + 1] != '1') return (0); // Droite
+	else{
+		ft_printf("Erreur joueur blocker.\n");
+		return (1); // Si aucune direction n’est accessible	
+	}
+	
+}
+
 
 int check_map_validity(char **map)
 {
@@ -128,6 +175,37 @@ int check_map_validity(char **map)
 	{
 		ft_printf("Erreur : la map contient des caractères invalides.\n");
 		return (1);
+	}
+	return (0);
+}
+
+int	check_map_entry(char **map)
+{
+	int	i;
+	int	j;
+	int	width;
+	
+	i = 0;
+	while(map[0][i])
+	{
+		if(map[0][i] != '1')
+			return (printf("map pas fermer brother"),1);
+		i++;
+	}
+	width = i;
+	i = 1;
+	while(map[i + 1][j])
+	{
+		if(map[i][0] != '1' || map[i][width] != '1')
+			return (printf("map pas fermer brother"),1);
+		i++;
+	}
+	j = 0;
+	while(map[i][j])
+	{
+		if(map[i][j] != '1')
+			return (printf("map pas fermer brother"),1);
+		j++;
 	}
 	return (0);
 }
@@ -188,6 +266,8 @@ void	draw_map(t_vars *vars)
 		y++;
 	}
 }
+
+
 
 int	get_map_width(char **map)
 {

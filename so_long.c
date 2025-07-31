@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 05:03:16 by asmati           ###   ########.fr       */
+/*   Updated: 2025/07/31 23:03:21 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	free_map(char **map)
 	free(map);
 	map = NULL;
 }
-
 
 void	free_all(t_vars *vars)
 {
@@ -86,12 +85,17 @@ int	main(int argc, char **argv)
 	vars.map = load_map(argv[1]);
 	if (!vars.map)
 		return (ft_printf("Error: failed to load map.\n"), 1);
+	if(check_map_entry(vars.map) == 1)
+		return (free_map(vars.map),0);
 	if(check_multiple_exites(vars.map) == 1)
 		return (free_map(vars.map),ft_printf("Error: multiple exits detected.\n"),0);
 	if(check_rectangle(vars.map) == 1) 
 		return (free_map(vars.map),0);
 	if(check_map_validity(vars.map) == 1)
 		return (free_map(vars.map),0);
+	if(is_player_blocked(vars.map) == 1)
+		return (free_map(vars.map),0);
+	
 	//printf("Longueur de la première ligne : %lu\n", strlen(vars.map[0])); //mettre le ft strlen
 	vars.mlx = mlx_init();
 	if (!vars.mlx)
@@ -106,7 +110,7 @@ int	main(int argc, char **argv)
 	vars.points_collected = 0;
 	vars.x = TILE_SIZE;
 	vars.y = TILE_SIZE;
-
+	
 	init_player_position(&vars);
 	draw_map(&vars);
 	coin_counter(&vars);
