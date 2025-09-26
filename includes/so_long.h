@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:31:18 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 22:32:21 by asmati           ###   ########.fr       */
+/*   Updated: 2025/09/26 23:30:02 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include "minilibx-linux/mlx.h"
+#include "../libs/minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "PRINTF/ft_printf.h"
-#include "Libft/libft.h"
+#include "../libs/PRINTF/ft_printf.h"
+#include "../libs/Libft/libft.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -60,22 +60,22 @@ typedef struct s_vars
 
 //SO_LONG
 int		can_move_to(t_vars *vars, int new_x, int new_y, char **map);
-int		coin(t_vars	*vars,int new_x, int new_y,char **map);
+int		coin(t_vars *vars, int new_x, int new_y, char **map);
 int		key_touch(int keycode, t_vars *vars);
 int		render_next_frame(void *param);
-int 	get_map_width(char **map);
-int 	get_map_height(char **map);
+int	get_map_width(char **map);
+int	get_map_height(char **map);
 int		countline(const char *filename);
 void	draw_map(t_vars *vars);
 void	init_player_position(t_vars *vars);
 void	free_map(char **map);
-char 	**load_map(const char *filename);
+char	**load_map(const char *filename);
 int		close_winds(t_vars *vars);
-char	mapmap(t_vars *vars);
+int	mapmap(t_vars *vars);
 void	endgame(t_vars *vars);
 void	new_y_x(int x, int y, t_vars *vars);
 int		coin_counter(t_vars *vars);
-int check_multiple_exites(char **map);
+int	check_multiple_exites(char **map);
 //GNL
 char *ft_strchr(const char *s, int c);
 char	*ft_strdup_gnl(const char *s1);
@@ -86,7 +86,11 @@ char	*get_next_line(int fd);
 
 
 void	free_all(t_vars *vars);
-int	 check_rectangle(char **map);
-
-
+int	check_rectangle(char **map);
+int	check_map_elements(char **map);
+t_point	get_player_position(char **map);
+int	is_player_blocked(char **map);
+int	check_map_validity(char **map);
+int	check_map_entry(char **map);
+	
 #endif

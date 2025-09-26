@@ -15,12 +15,14 @@ NAME        = so_long
 
 # Compilateur et flags
 CC          = cc
-CFLAGS      = 
+CFLAGS      = -Wall -Wextra -Werror -I$(INC_DIR)
 
 # Répertoires
-MLX_DIR     = ./minilibx-linux
-PRINTF_DIR  = ./PRINTF
-LIBFT_DIR   = ./Libft
+SRC_DIR     = ./src
+INC_DIR     = ./includes
+MLX_DIR     = ./libs/minilibx-linux
+PRINTF_DIR  = ./libs/PRINTF
+LIBFT_DIR   = ./libs/Libft
 
 # Bibliothèques
 MLX_LIB     = $(MLX_DIR)/libmlx_Linux.a
@@ -28,13 +30,15 @@ PRINTF_LIB  = $(PRINTF_DIR)/libftprintf.a
 LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
 # Fichiers source et objets
-SRCS        = so_long.c\
-			 map.c \
-			 player.c \
-			 coins.c \
-			 window.c \
-			 get_next_line.c \
-			 get_next_line_utils.c \
+SRCS        = $(SRC_DIR)/so_long.c\
+			 $(SRC_DIR)/map.c \
+			 $(SRC_DIR)/map_validation.c \
+			 $(SRC_DIR)/map_draw.c \
+			 $(SRC_DIR)/player.c \
+			 $(SRC_DIR)/coins.c \
+			 $(SRC_DIR)/window.c \
+			 $(SRC_DIR)/get_next_line.c \
+			 $(SRC_DIR)/get_next_line_utils.c \
 
 OBJS        = $(SRCS:.c=.o)
 

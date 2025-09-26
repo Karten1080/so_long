@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:21:53 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/31 23:03:21 by asmati           ###   ########.fr       */
+/*   Updated: 2025/09/26 23:47:23 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	free_all(t_vars *vars)
 
 int	main(int argc, char **argv)
 {
-	int count;
 	t_vars	vars;
+
+	if (argc != 2)
+		return (ft_printf("Usage: %s <map_file>\n", argv[0]), 1);
 
 	vars.mur = NULL;
 	vars.sol = NULL;
@@ -85,24 +87,20 @@ int	main(int argc, char **argv)
 	vars.map = load_map(argv[1]);
 	if (!vars.map)
 		return (ft_printf("Error: failed to load map.\n"), 1);
-	if(check_map_entry(vars.map) == 1)
-		return (free_map(vars.map),0);
-	if(check_multiple_exites(vars.map) == 1)
-		return (free_map(vars.map),ft_printf("Error: multiple exits detected.\n"),0);
-	if(check_rectangle(vars.map) == 1) 
-		return (free_map(vars.map),0);
-	if(check_map_validity(vars.map) == 1)
-		return (free_map(vars.map),0);
-	if(is_player_blocked(vars.map) == 1)
-		return (free_map(vars.map),0);
-	
-	//printf("Longueur de la première ligne : %lu\n", strlen(vars.map[0])); //mettre le ft strlen
+	if (check_map_entry(vars.map) == 1)
+		return (free_map(vars.map), 1);
+	if (check_map_elements(vars.map) == 1)
+		return (free_map(vars.map), 1);
+	if (check_rectangle(vars.map) == 1)
+		return (free_map(vars.map), 1);
+	if (check_map_validity(vars.map) == 1)
+		return (free_map(vars.map), 1);
 	vars.mlx = mlx_init();
 	if (!vars.mlx)
 		return (ft_printf("Erreur : échec de mlx_init.\n"), 1);
 	if (mapmap(&vars) != 0)
 	{
-		ft_printf("Erreur lors du chargement des images ou création fenêtre.\n");
+		ft_printf("Erreur lors du chargement des images ou création.\n");
 		free_all(&vars);
 		return (1);
 	}

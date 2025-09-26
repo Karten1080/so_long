@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 01:37:14 by asmati            #+#    #+#             */
-/*   Updated: 2025/07/10 17:42:44 by asmati           ###   ########.fr       */
+/*   Updated: 2025/09/26 23:47:23 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static char	*_set_line(char **line_buffer)
 	if (!tab)
 		return (NULL);
 	if (i >= ft_strlen(*line_buffer))
-		return (free(*line_buffer),*line_buffer = NULL,tab);
+		return (free(*line_buffer), *line_buffer = NULL, tab);
 	rest = ft_substr(*line_buffer, i, ft_strlen(*line_buffer) - i);
 	if (!rest)
-		return (free(tab),NULL);
-	return (free(*line_buffer),*line_buffer = rest,tab);
+		return (free(tab), NULL);
+	return (free(*line_buffer), *line_buffer = rest, tab);
 }
 
 static char	*_fill_line_buffer(int fd, char *stash, char *buffer)
@@ -54,18 +54,18 @@ static char	*_fill_line_buffer(int fd, char *stash, char *buffer)
 			return (NULL);
 	}
 	bytes_read = 1;
-	while (!ft_strchr(stash, '\n') && bytes_read > 0 )
+	while (!ft_strchr(stash, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)			
-			return (free(stash),stash = NULL,NULL);
-		if(bytes_read == 0)
-			break;
+		if (bytes_read == -1)
+			return (free(stash), stash = NULL, NULL);
+		if (bytes_read == 0)
+			break ;
 		buffer[bytes_read] = '\0';
 		tmp = stash;
 		stash = ft_strjoin(stash, buffer);
-		if(!stash)
-			return(free(tmp),NULL);
+		if (!stash)
+			return (free(tmp), NULL);
 		free(tmp);
 	}
 	return (stash);
@@ -81,13 +81,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (free(buffer),NULL);
+		return (free(buffer), NULL);
 	stash = _fill_line_buffer(fd, stash, buffer);
 	free(buffer);
 	if (!stash)
 		return (NULL);
 	line = _set_line(&stash);
 	if (!line || line[0] == '\0')
-		return (free(line),free(stash),stash = NULL,NULL);
+		return (free(line), free(stash), stash = NULL, NULL);
 	return (line);
 }
