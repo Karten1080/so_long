@@ -57,7 +57,6 @@ int	get_map_width(char **map)
 	if (!map || !map[0])
 		return (0);
 	width = ft_strlen(map[0]);
-	width--;
 	return (width);
 }
 

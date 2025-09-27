@@ -6,23 +6,23 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:31:18 by asmati            #+#    #+#             */
-/*   Updated: 2025/09/26 23:30:02 by asmati           ###   ########.fr       */
+/*   Updated: 2025/09/27 12:40:58 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef  so_long_h
 # define so_long_h
 
-#include <X11/X.h>
-#include <X11/keysym.h>
-#include "../libs/minilibx-linux/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libs/PRINTF/ft_printf.h"
-#include "../libs/Libft/libft.h"
+#include <X11/X.h>
+#include <X11/keysym.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "../libs/minilibx-linux/mlx.h"
+#include "../libs/PRINTF/ft_printf.h"
+#include "../libs/Libft/libft.h"
 
 #define TILE_SIZE 30
 # ifndef BUFFER_SIZE
