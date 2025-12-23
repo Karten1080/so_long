@@ -22,9 +22,9 @@ Le joueur contrôle un personnage qui se déplace sur une carte constituée de m
 ## 📂 Fichiers
 
 - `so_long.c` : Code source principal du jeu
-- `map_parsing.c` : Parsing et validation des cartes
-- `game_logic.c` : Logique du jeu et déplacements
-- `graphics.c` : Gestion de l'affichage avec MiniLibX
+- `map_validation.c` : Parsing et validation des cartes
+- `windows.c` : Logique du jeu et déplacements
+- `map.c` : Gestion de l'affichage avec MiniLibX
 - `so_long.h` : Fichier d'en-tête
 - `Makefile` : Compilation du projet
 
