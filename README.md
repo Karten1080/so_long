@@ -99,4 +99,4 @@ Exemple de carte valide :
 
 ## 👤 Auteur
 
-Projet réalisé par [bhyant](https://github.com/bhyant) dans le cadre du cursus 42.
+Projet réalisé par [asmati](https://github.com/Karten1080) dans le cadre du cursus 42.
