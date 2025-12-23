@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:19:42 by asmati            #+#    #+#             */
-/*   Updated: 2025/05/23 10:02:55 by asmati           ###   ########.fr       */
+/*   Updated: 2025/10/17 18:31:53 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void			*tmp;
+
 	if (size != 0 && count > SIZE_MAX / size)
 		return (NULL);
 	tmp = malloc(count * size);

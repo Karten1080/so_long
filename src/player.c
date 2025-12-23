@@ -6,7 +6,7 @@
 /*   By: asmati <asmati@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 11:53:52 by asmati            #+#    #+#             */
-/*   Updated: 2025/09/26 23:47:23 by asmati           ###   ########.fr       */
+/*   Updated: 2025/10/20 15:43:11 by asmati           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,45 +50,51 @@ void	init_player_position(t_vars *vars)
 	}
 }
 
+static int	get_new_position(int keycode, int *new_x, int *new_y)
+{
+	if (keycode == XK_Escape)
+		return (-1);
+	else if (keycode == 'a' || keycode == XK_Left)
+		*new_x -= TILE_SIZE;
+	else if (keycode == 'd' || keycode == XK_Right)
+		*new_x += TILE_SIZE;
+	else if (keycode == 'w' || keycode == XK_Up)
+		*new_y -= TILE_SIZE;
+	else if (keycode == 's' || keycode == XK_Down)
+		*new_y += TILE_SIZE;
+	else
+		return (1);
+	return (0);
+}
+
+static void	handle_move(t_vars *vars, int new_x, int new_y, int move_result)
+{
+	new_y_x(new_x, new_y, vars);
+	draw_map(vars);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img1, vars->x,
+		vars->y);
+	vars->moves++;
+	ft_printf("Moves: %d\n", vars->moves);
+	if (move_result == 2 && coin_counter(vars) == 0)
+		endgame(vars);
+}
+
 int	key_touch(int keycode, t_vars *vars)
 {
 	int	new_x;
 	int	new_y;
 	int	move_result;
+	int	pos_result;
 
 	new_x = vars->x;
 	new_y = vars->y;
-	if (keycode == XK_Escape)
+	pos_result = get_new_position(keycode, &new_x, &new_y);
+	if (pos_result == -1)
 		endgame(vars);
-	else if (keycode == XK_Left)
-		new_x -= TILE_SIZE;
-	else if (keycode == XK_Right)
-		new_x += TILE_SIZE;
-	else if (keycode == XK_Up)
-		new_y -= TILE_SIZE;
-	else if (keycode == XK_Down)
-		new_y += TILE_SIZE;
+	if (pos_result == 1)
+		return (0);
 	move_result = can_move_to(vars, new_x, new_y, vars->map);
 	if (move_result == 1 || move_result == 2)
-	{
-		new_y_x(new_x, new_y, vars);
-		if (move_result == 2 && coin_counter(vars) == 0)
-			endgame(vars);
-	}
-	return (0);
-}
-
-int	render_next_frame(void *param)
-{
-	t_vars	*vars;
-
-	vars = (t_vars *)param;
-	draw_map(vars);
-	if (vars->current_frame == 0)
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->img1, vars->x,
-			vars->y);
-	else
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->img2, vars->x,
-			vars->y);
+		handle_move(vars, new_x, new_y, move_result);
 	return (0);
 }

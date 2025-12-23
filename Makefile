@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adel <adel@student.42.fr>                   +#+  +:+       +#+         #
+#    By: asmati <asmati@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/02                                #+#    #+#              #
-#    Updated: 2025/07/02                                ###   ########.fr        #
+#    Created: 2025/10/23 19:08:27 by asmati            #+#    #+#              #
+#    Updated: 2025/10/25 14:25:04 by asmati           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 # Nom du programme
 NAME        = so_long
@@ -31,8 +32,11 @@ LIBFT_LIB   = $(LIBFT_DIR)/libft.a
 
 # Fichiers source et objets
 SRCS        = $(SRC_DIR)/so_long.c\
+			 $(SRC_DIR)/so_long_utils.c \
 			 $(SRC_DIR)/map.c \
 			 $(SRC_DIR)/map_validation.c \
+			 $(SRC_DIR)/map_validation_utils.c \
+			 $(SRC_DIR)/map_size_check.c \
 			 $(SRC_DIR)/map_draw.c \
 			 $(SRC_DIR)/player.c \
 			 $(SRC_DIR)/coins.c \
@@ -49,8 +53,8 @@ LDFLAGS     = -L$(MLX_DIR) -lmlx_Linux -L$(PRINTF_DIR) -lftprintf -L$(LIBFT_DIR)
 # Règle par défaut
 all: $(NAME)
 
-# Compilation du binaire
-$(NAME): $(OBJS) $(MLX_LIB) $(PRINTF_LIB) $(LIBFT_LIB)
+# Compilation du binaire - force recompilation si une lib change
+$(NAME): $(OBJS) ./includes/so_long.h $(MLX_LIB) $(PRINTF_LIB) $(LIBFT_LIB)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 # Compilation des librairies
@@ -60,13 +64,19 @@ $(MLX_LIB):
 $(PRINTF_LIB):
 	$(MAKE) -C $(PRINTF_DIR)
 
-$(LIBFT_LIB):
+$(LIBFT_LIB): .FORCE
 	$(MAKE) -C $(LIBFT_DIR)
+
+# Règle pour compiler les .o à partir des .c
+%.o: %.c $(LIBFT_LIB) $(PRINTF_LIB)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.FORCE:
 
 # Nettoyage des objets
 clean:
 	$(RM) $(OBJS)
-	$(MAKE) -C $(MLX_DIR) clean
+	@if [ -d $(MLX_DIR) ]; then $(MAKE) -C $(MLX_DIR) clean; fi
 	$(MAKE) -C $(PRINTF_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 
@@ -79,4 +89,4 @@ fclean: clean
 # Rebuild complet
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re .FORCE
